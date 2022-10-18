@@ -1,0 +1,31 @@
+server:
+  port: 8082
+  eureka:
+   client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+   instance:
+    hostname: localhost
+  
+
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: Booking-Services
+          uri: lb://Booking_Service
+          predicates:
+            - Path=/booking/**
+            
+        - id: Authentication-Service
+          uri: lb://BookingAuthentication
+          predicates:
+           - Path=/api/auth/**
+        
+
+ 
